@@ -3,6 +3,7 @@
 #include "Pickup.h"
 
 #include "Components/StaticMeshComponent.h"
+#include "Components/PointLightComponent.h"
 #include "Engine/World.h"
 
 // Sets default values
@@ -15,6 +16,14 @@ APickup::APickup()
 	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("PickupMesh"));
 	SetRootComponent(PickupMesh);
 	PickupMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	PickupMesh->SetCastShadow(false);
+
+	PickupLight = CreateDefaultSubobject<UPointLightComponent>(FName("PickupLight"));
+	PickupLight->AttachTo(PickupMesh);
+	PickupLight->SetIntensity(20000.0f);
+	
+
+		
 }
 
 // Called when the game starts or when spawned
@@ -30,7 +39,6 @@ void APickup::OnOverlap(UPrimitiveComponent * OverlappedComponent, AActor * Othe
 	auto PlayerTank = Cast<AActor>(GetWorld()->GetFirstPlayerController()->GetPawn()); // Get PlayerTank
 	if (!PlayerTank) { return; }
 	if (OtherActor == PlayerTank){ 
-		UE_LOG(LogTemp, Warning, TEXT("Overlapped!"));
 		PickupCollection();
 		Destroy();
 	}

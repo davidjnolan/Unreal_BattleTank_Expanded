@@ -42,6 +42,9 @@ public:
 	int32 GetRoundsLeft() const;
 
 protected:
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void SetProjectileBP(TSubclassOf<AProjectile> NewProjectileBlueprint);
+
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 

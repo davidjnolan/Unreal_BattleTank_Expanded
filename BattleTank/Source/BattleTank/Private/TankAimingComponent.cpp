@@ -53,6 +53,11 @@ int32 UTankAimingComponent::GetRoundsLeft() const
 	return RoundsLeft;
 }
 
+void UTankAimingComponent::SetProjectileBP(TSubclassOf<AProjectile> NewProjectileBlueprint)
+{
+	ProjectileBlueprint = NewProjectileBlueprint;
+}
+
 void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
 	if (!ensure(BarrelToSet && TurretToSet)) { return; }

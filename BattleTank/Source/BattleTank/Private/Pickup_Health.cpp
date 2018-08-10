@@ -13,7 +13,6 @@ APickup_Health::APickup_Health()
 
 void APickup_Health::PickupCollection()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Health Pickup Collected!"));
 	ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn()); // Get PlayerTank
 
 	int32 CurrentHealth = PlayerTank->GetHealth();

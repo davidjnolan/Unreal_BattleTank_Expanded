@@ -13,3 +13,4 @@ Built using Unreal Engine 4.19.2
 * BTE01: Setting up a Github Repos
 * BTE02: Adding player distance detection to AI
 * BTE03: Added pickup functionality
+* BTE04: Added base functionality to allow for weapon changes

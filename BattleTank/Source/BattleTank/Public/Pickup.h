@@ -6,6 +6,10 @@
 #include "GameFramework/Actor.h"
 #include "Pickup.generated.h"
 
+// Forward Declarations
+class UStaticMeshComponent;
+class UPointLightComponent;
+
 UCLASS()
 class BATTLETANK_API APickup : public AActor
 {
@@ -26,10 +30,12 @@ protected:
 	// Called when Pickup is Collected - to be overridden in child classes
 	virtual void PickupCollection();
 
-	// Adds the static mesh component to the Pickup
+	// Components
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* PickupMesh = nullptr;
-
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPointLightComponent* PickupLight = nullptr;
+	
 	// Set Rotation Rate for Pickup
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Pickup")
 	FRotator RotationRate = FRotator(0.0f, 90.0f, 0.0f); // Will rotate the Yaw (Z Axis)
