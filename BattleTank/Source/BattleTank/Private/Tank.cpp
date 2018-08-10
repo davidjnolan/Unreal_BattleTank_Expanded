@@ -13,6 +13,10 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (IsPlayerControlled()) {
+		StartingHealth = StartingHealth * 2;
+	}
 	CurrentHealth = StartingHealth;
 }
 
@@ -27,6 +31,21 @@ float ATank::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AControl
 	};
 
 	return DamageToApply;
+}
+
+int32 ATank::GetHealth() const
+{
+	return CurrentHealth;
+}
+
+void ATank::SetHealth(int32 NewHealth)
+{
+	CurrentHealth = NewHealth;
+}
+
+int32 ATank::GetStartingHealth() const
+{
+	return StartingHealth;
 }
 
 float ATank::GetHealthPercent() const

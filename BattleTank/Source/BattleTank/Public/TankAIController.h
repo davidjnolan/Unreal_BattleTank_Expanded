@@ -6,6 +6,9 @@
 #include "AIController.h"
 #include "TankAIController.generated.h"
 
+// Forward Declarations
+class APickup;
+
 /**
  * 
  */
@@ -23,6 +26,11 @@ private:
 	UFUNCTION()
 	void OnPossessedTankDeath();
 
+	void SpawnPickups(APawn* PossessedTank);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<APickup> PickupBlueprint_Health;
+
 protected:
 	// How close can the AI tank get to the player
 	UPROPERTY(EditDefaultsOnly, Category = "Setup") 
@@ -30,6 +38,9 @@ protected:
 
 	UPROPERTY (EditDefaultsOnly, Category = "Setup")
 	float DetectionRadius = 25000;
+
+	UPROPERTY (EditDefaultsOnly, Category = "Setup")
+	float PickupMaxSpawnDistance = 300.0f;
 
 	bool bDetectedPlayer = false;
 

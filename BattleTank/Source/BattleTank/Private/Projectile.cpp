@@ -1,6 +1,7 @@
 // Copyright PixelSpawn 2018
 
 #include "Projectile.h"
+
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Engine/World.h"
 #include "Components/StaticMeshComponent.h"

@@ -91,7 +91,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 void UTankAimingComponent::Fire()
 {
-	
 	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming) { 
 		// Spawn a projectile at the socket location of the barrel
 		if (!ensure(Barrel)) { return; }
@@ -99,7 +98,6 @@ void UTankAimingComponent::Fire()
 
 		auto BarrelSockets = Barrel->GetAllSocketNames();
 		for (int i = 0; i < BarrelSockets.Num(); i++) {
-			UE_LOG(LogTemp, Warning, TEXT("%s firing"), *BarrelSockets[i].ToString());
 			Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
 																  Barrel->GetSocketLocation(BarrelSockets[i]),
 																  Barrel->GetSocketRotation(BarrelSockets[i])

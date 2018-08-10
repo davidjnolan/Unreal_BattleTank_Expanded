@@ -2,6 +2,8 @@
 
 #include "Pickup.h"
 
+#include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
 
 // Sets default values
 APickup::APickup()
@@ -9,17 +11,33 @@ APickup::APickup()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	PickupMesh = CreateDefaultSubobject<UStaticMesh>(FName("PickupMesh"));
+	// Setup Components
+	PickupMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("PickupMesh"));
 	SetRootComponent(PickupMesh);
-
-
+	PickupMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 }
 
 // Called when the game starts or when spawned
 void APickup::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	PickupMesh->OnComponentBeginOverlap.AddDynamic(this, &APickup::OnOverlap);
+}
+
+void APickup::OnOverlap(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	auto PlayerTank = Cast<AActor>(GetWorld()->GetFirstPlayerController()->GetPawn()); // Get PlayerTank
+	if (!PlayerTank) { return; }
+	if (OtherActor == PlayerTank){ 
+		UE_LOG(LogTemp, Warning, TEXT("Overlapped!"));
+		PickupCollection();
+		Destroy();
+	}
+	else
+	{
+		return; // Return if overlapped actor is not player tank
+	}
 }
 
 // Called every frame
@@ -27,5 +45,14 @@ void APickup::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// Apply rotation to Pickup
+	AddActorLocalRotation(RotationRate * DeltaTime * RotationSpeed);
 }
+
+
+void APickup::PickupCollection()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Collected!"));
+}
+
 

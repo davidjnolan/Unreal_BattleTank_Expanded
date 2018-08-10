@@ -4,6 +4,7 @@
 #include "BattleTank.h"
 #include "Tank.h" // So we can implement OnDeath
 #include "TankAimingComponent.h"
+#include "Pickup.h"
 
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
@@ -30,7 +31,10 @@ void ATankAIController::SetPawn(APawn * InPawn)
 void ATankAIController::OnPossessedTankDeath()
 {
 	if (!GetPawn()) { return; }
-	GetPawn()->DetachFromControllerPendingDestroy();
+	auto PossessedTank = GetPawn();
+	SpawnPickups(PossessedTank);
+	PossessedTank->DetachFromControllerPendingDestroy();
+	PossessedTank->Destroy();
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -51,9 +55,7 @@ void ATankAIController::Tick(float DeltaTime)
 	}
 	else {
 		bDetectedPlayer = false;
-	}
-	UE_LOG(LogTemp, Warning, TEXT("Distance: %f, Detected = %i"), DistanceFromPlayer, bDetectedPlayer);
-	
+	}	
 
 	if (bDetectedPlayer) {
 		// Move towards the player
@@ -67,4 +69,17 @@ void ATankAIController::Tick(float DeltaTime)
 			AimingComponent->Fire(); // TODO limit firing rate
 		}
 	} 
+}
+
+void ATankAIController::SpawnPickups(APawn* PossessedTank)
+{
+	if (!ensure(PossessedTank)) { return; }
+	if (!ensure(PickupBlueprint_Health)) { return; }
+
+	float SpawnOffsetX = FMath::RandRange(PickupMaxSpawnDistance*-1, PickupMaxSpawnDistance);
+	float SpawnOffsetY = FMath::RandRange(PickupMaxSpawnDistance*-1, PickupMaxSpawnDistance);
+	FVector SpawnOffset = FVector(SpawnOffsetX, SpawnOffsetY, PickupMaxSpawnDistance);
+	FVector SpawnLocation = PossessedTank->GetActorLocation() + SpawnOffset;
+
+	GetWorld()->SpawnActor<APickup>(PickupBlueprint_Health, SpawnLocation, PossessedTank->GetActorRotation());
 }

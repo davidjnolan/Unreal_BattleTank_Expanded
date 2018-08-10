@@ -11,3 +11,5 @@ Built using Unreal Engine 4.19.2
 
 ## Commits
 * BTE01: Setting up a Github Repos
+* BTE02: Adding player distance detection to AI
+* BTE03: Added pickup functionality
