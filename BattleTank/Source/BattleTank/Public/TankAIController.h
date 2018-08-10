@@ -23,9 +23,15 @@ private:
 	UFUNCTION()
 	void OnPossessedTankDeath();
 
-
 protected:
 	// How close can the AI tank get to the player
 	UPROPERTY(EditDefaultsOnly, Category = "Setup") 
-	float AcceptanceRadius = 5000;
+	float AcceptanceRadius = 7000;
+
+	UPROPERTY (EditDefaultsOnly, Category = "Setup")
+	float DetectionRadius = 25000;
+
+	bool bDetectedPlayer = false;
+
+
 };
