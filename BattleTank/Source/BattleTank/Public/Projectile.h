@@ -25,20 +25,43 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 20000.0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 2.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	int32 RoundsLeft = 20;
+
+	UPROPERTY(EditDefaultsOnly, category = "Firing")
+	float ProjectileDamage = 20.0f;
+
+	UPROPERTY(EditDefaultsOnly, category = "Firing")
+	float DestroyDelay = 7.0f;
+
 public:	
+
+	// Getters
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetLaunchSpeed() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetReloadTimeInSeconds() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual int32 GetRoundsLeft() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetProjectileDamage() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetDestroyDelay() const;
+
 	void LaunchProjectile(float Speed);
+
 
 private: 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
 	void OnTimerExpire();
-
-	UPROPERTY(EditDefaultsOnly, category = "Setup")
-	float DestroyDelay = 7.0f;
-
-	UPROPERTY(EditDefaultsOnly, category = "Setup")
-	float ProjectileDamage = 20.0f;
 
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 

@@ -45,6 +45,20 @@ void AProjectile::BeginPlay()
 	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
+
+float AProjectile::GetLaunchSpeed() const { return LaunchSpeed; }
+
+float AProjectile::GetReloadTimeInSeconds() const { return ReloadTimeInSeconds; }
+
+int32 AProjectile::GetRoundsLeft() const { return RoundsLeft; }
+
+float AProjectile::GetProjectileDamage() const { return ProjectileDamage; }
+
+float AProjectile::GetDestroyDelay() const { return DestroyDelay; }
+
+
+
+
 void AProjectile::LaunchProjectile(float Speed) 
 {
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);

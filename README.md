@@ -14,3 +14,4 @@ Built using Unreal Engine 4.19.2
 * BTE02: Adding player distance detection to AI
 * BTE03: Added pickup functionality
 * BTE04: Added base functionality to allow for weapon changes
+* BTE05: Refactor TankAimingComponent so that it gets it's weapon settings from the attached projectile

@@ -43,10 +43,20 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
+	TSubclassOf<AProjectile> GetProjectileBP() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void SetProjectileBP(TSubclassOf<AProjectile> NewProjectileBlueprint);
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
+
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void SetRoundsLeft(int32 NewRoundsCount);
+
+	// Gets the LaunchSpeed, ReloadTimeInSeconds and RoundsLeft defaults from referenced projectile and sets them in the aiming component
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void ApplyProjectileSettings();
 
 private:
 	// Sets default values for this component's properties
@@ -63,21 +73,23 @@ private:
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
 	float LaunchSpeed = 20000.0;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
 	float ReloadTimeInSeconds = 2.0f;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 RoundsLeft = 20;
+	UPROPERTY(VisibleAnywhere, Category = "Firing")
+	int32 RoundsLeft = 5;
 
 	double LastFireTime = 0;
 
 	FVector AimDirection;
 
 	AProjectile* Projectile = nullptr;
+
+
 };

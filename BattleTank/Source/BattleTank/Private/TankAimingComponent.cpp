@@ -4,9 +4,12 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "Projectile.h"
+
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
+#include "Public/TimerManager.h"
+
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -21,13 +24,18 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ApplyProjectileSettings();
+
 	// So that first fire is after inital reload
 	LastFireTime = GetWorld()->GetTimeSeconds();
+
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) 
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
 	if (RoundsLeft <= 0) {
 		FiringState = EFiringState::OutOfAmmo;
 	}
@@ -40,29 +48,35 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	else {
 		FiringState = EFiringState::Locked;
 	}
-	// TODO Handle aiming and locked states
 }
 
-EFiringState UTankAimingComponent::GetFiringState() const
-{
-	return FiringState;
-}
+EFiringState UTankAimingComponent::GetFiringState() const {	return FiringState; }
 
-int32 UTankAimingComponent::GetRoundsLeft() const
-{
-	return RoundsLeft;
-}
+int32 UTankAimingComponent::GetRoundsLeft() const {	return RoundsLeft; }
 
-void UTankAimingComponent::SetProjectileBP(TSubclassOf<AProjectile> NewProjectileBlueprint)
-{
-	ProjectileBlueprint = NewProjectileBlueprint;
-}
+void UTankAimingComponent::SetRoundsLeft(int32 NewRoundsCount) { RoundsLeft = NewRoundsCount; }
+
+TSubclassOf<AProjectile> UTankAimingComponent::GetProjectileBP() const { return ProjectileBlueprint; }
+
+void UTankAimingComponent::SetProjectileBP(TSubclassOf<AProjectile> NewProjectileBlueprint) { ProjectileBlueprint = NewProjectileBlueprint; }
 
 void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
 	if (!ensure(BarrelToSet && TurretToSet)) { return; }
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
+}
+
+void UTankAimingComponent::ApplyProjectileSettings()
+{
+	if (!ensure(ProjectileBlueprint)) { return; }
+	FTransform SpawnLocation = FTransform(FVector(0.0f, 0.0f, -5000.0f));
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, SpawnLocation);
+
+	LaunchSpeed = Projectile->GetLaunchSpeed();
+	ReloadTimeInSeconds = Projectile->GetReloadTimeInSeconds();
+	RoundsLeft = Projectile->GetRoundsLeft();
+	Projectile->Destroy();
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
@@ -107,14 +121,19 @@ void UTankAimingComponent::Fire()
 																  Barrel->GetSocketLocation(BarrelSockets[i]),
 																  Barrel->GetSocketRotation(BarrelSockets[i])
 																  );
+			
 			Projectile->LaunchProjectile(LaunchSpeed);
 		};
 		LastFireTime = GetWorld()->GetTimeSeconds();
 		RoundsLeft--;
 	}
-	// TODO - figure out why 3 projectiles can't be fired at same time from 1 object
+	// TODO - create a class level TArray to store the SocketNames, and a function to iterate through
 	// Suspect it has something to do with where the start location is calculated in AimAt
 }
+
+
+
+
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
@@ -133,6 +152,10 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	else { // Avoid going the long way round
 		Turret->Rotate(-DeltaRotator.Yaw);
 	}
+
+	
+
+
 }
 
 bool UTankAimingComponent::IsBarrelMoving()

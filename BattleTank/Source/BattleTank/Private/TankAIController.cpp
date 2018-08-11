@@ -59,14 +59,14 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (bDetectedPlayer) {
 		// Move towards the player
-		MoveToActor(PlayerTank, AcceptanceRadius); // TODO check radius is in cm
+		MoveToActor(PlayerTank, AcceptanceRadius);
 
 		// Aim towards the player
 		auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 		AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
 		if (AimingComponent->GetFiringState() == EFiringState::Locked) {
-			AimingComponent->Fire(); // TODO limit firing rate
+			AimingComponent->Fire();
 		}
 	} 
 }
@@ -83,3 +83,5 @@ void ATankAIController::SpawnPickups(APawn* PossessedTank)
 
 	GetWorld()->SpawnActor<APickup>(PickupBlueprint_Health, SpawnLocation, PossessedTank->GetActorRotation());
 }
+
+
