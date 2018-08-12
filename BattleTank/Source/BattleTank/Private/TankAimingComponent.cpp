@@ -172,7 +172,6 @@ void UTankAimingComponent::UpdateBarrelSockets() {
 		ReloadTimeInSeconds = MultiBarrelReloadTimeInSeconds;
 	}
 	CurrentBarrelSocket = BarrelSockets[LastFiredBarrelIndex];
-	UE_LOG(LogTemp, Warning, TEXT("CurrentBarrel: %s"), *CurrentBarrelSocket.ToString());
 }
 
 // Checks if tank has rounds left, whether tank is reloaded, and if the barrel is moving to set the firing state Enum

@@ -21,6 +21,8 @@ APickup::APickup()
 	PickupLight = CreateDefaultSubobject<UPointLightComponent>(FName("PickupLight"));
 	PickupLight->AttachTo(PickupMesh);
 	PickupLight->SetIntensity(20000.0f);
+
+	
 	
 
 		
@@ -32,7 +34,12 @@ void APickup::BeginPlay()
 	Super::BeginPlay();
 
 	PickupMesh->OnComponentBeginOverlap.AddDynamic(this, &APickup::OnOverlap);
+	PickupLight->SetLightColor(PickupColor);
 }
+
+// Returns the PickupColor
+FLinearColor APickup::GetPickupColor() const { return PickupColor; }
+
 
 void APickup::OnOverlap(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {

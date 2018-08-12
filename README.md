@@ -16,3 +16,4 @@ Built using Unreal Engine 4.19.2
 * BTE04: Added base functionality to allow for weapon changes
 * BTE05: Refactor TankAimingComponent so that it gets it's weapon settings from the attached projectile
 * BTE06: Add functionality to allow multiple barrel firing
+* BTE07: Setting Pickup light and material colors dynamically through Blueprint
