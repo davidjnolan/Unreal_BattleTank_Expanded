@@ -84,8 +84,6 @@ private:
 	// Returns true if barrel is moving, otherwise false - used in Tick to determine the current firing state
 	bool IsBarrelMoving();
 
-
-
 	// Updates the variables to determine which barrel fires next
 	void UpdateBarrelSockets();
 

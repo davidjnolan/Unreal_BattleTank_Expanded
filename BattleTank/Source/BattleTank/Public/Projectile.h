@@ -21,6 +21,21 @@ public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
+
+	// Getters
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetLaunchSpeed() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetReloadTimeInSeconds() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual int32 GetRoundsLeft() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetProjectileDamage() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	virtual float GetDestroyDelay() const;
+
+	void LaunchProjectile(float Speed);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -40,21 +55,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly, category = "Firing")
 	float DestroyDelay = 7.0f;
 
-public:	
+	UPROPERTY(EditDefaultsOnly, category = "Firing")
+	float ForceRadiusDefault = 400.0f;
 
-	// Getters
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	virtual float GetLaunchSpeed() const;
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	virtual float GetReloadTimeInSeconds() const;
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	virtual int32 GetRoundsLeft() const;
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	virtual float GetProjectileDamage() const;
-	UFUNCTION(BlueprintCallable, Category = "Firing")
-	virtual float GetDestroyDelay() const;
-
-	void LaunchProjectile(float Speed);
+	UPROPERTY(EditDefaultsOnly, category = "Firing")
+	float BlastRadius = 1.0f;
 
 
 private: 

@@ -1,1 +1,22 @@
 # TODO
+
+* Design several projectile behaviors
+* Create particle effects for projectiles
+* Refactor Projectiles so that each have a C++ base class
+* Disable ability for tanks to damage themselves with their own projectiles
+* Add TArray somewhere that can store all of the projectile blueprints
+* Make collision boxes on pickups bigger
+* Setup behavior to randomly spawn different projectiles
+* Add wandering behavior to the tanks when not detecting player
+* Add a kill screen
+* Create a win state
+* Add a win screen
+* Add sound effects
+* Make Icons for Pickups
+* Build UI
+* Dynamically link projectile colour UI etc
+* Dynamically remove mini health bar from player controlled tank
+* Make MiniMap
+* Add documentation comments to all of my classes
+* Build model for first tank and turret
+

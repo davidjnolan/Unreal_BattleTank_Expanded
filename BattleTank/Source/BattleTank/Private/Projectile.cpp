@@ -36,6 +36,7 @@ AProjectile::AProjectile()
 
 	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("ExplosionForce"));
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	ExplosionForce->Radius = ForceRadiusDefault;
 }
 
 // Called when the game starts or when spawned
@@ -43,6 +44,8 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
+	ImpactBlast->SetRelativeScale3D(FVector(BlastRadius, BlastRadius, BlastRadius));
+	ExplosionForce->Radius = ExplosionForce->Radius * BlastRadius;
 }
 
 
@@ -79,7 +82,10 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 										GetActorLocation(),
 										ExplosionForce->Radius,
 										UDamageType::StaticClass(),
-										TArray<AActor*>() // Empty array - will damage all actors
+										TArray<AActor*>(), // Empty array - will damage all actors
+										(AActor*) 0, // Ignore damage causing Actor
+										(AController*) 0, // Ignore controller responsible for causing damage
+										false // damage falls off based on distance from origin
 										);
 	
 	// Destroy Projectile
