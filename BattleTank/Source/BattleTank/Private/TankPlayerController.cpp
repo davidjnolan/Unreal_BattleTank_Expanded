@@ -4,6 +4,7 @@
 #include "Tank.h" // So we can implement OnDeath
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
+#include "BattleTankGameModeBase.h"
 
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
@@ -13,10 +14,13 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
 	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return;	}
 	FoundAimingComponent(AimingComponent);
+
+	//Gamemode = (ABattleTankGameModeBase*)GetWorld()->GetAuthGameMode(); // Find the Gamemode
 }
 
 void ATankPlayerController::SetPawn(APawn * InPawn)
@@ -28,6 +32,11 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 
 		// Subscribe out local method to the tank's death event
 		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+
+		// Subscribe to Gamemode win event delegate
+		auto Gamemode = (ABattleTankGameModeBase*)GetWorld()->GetAuthGameMode();
+		if (!ensure(Gamemode)) { return; }
+		Gamemode->OnWin.AddUniqueDynamic(this, &ATankPlayerController::OnGameWin);
 	}
 }
 
@@ -43,6 +52,12 @@ void ATankPlayerController::OnPossessedTankDeath()
 	APlayerController::StartSpectatingOnly();
 	TankDies();
 }
+/*
+void ATankPlayerController::OnGameWin()
+{
+	UE_LOG(LogTemp, Warning, TEXT("YOU WIN MUTHAFUCKA!!"));
+}*/
+
 
 void ATankPlayerController::AimTowardCrosshair()
 {

@@ -22,6 +22,7 @@ private:
 	virtual void SetPawn(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;
 
+	// Delegate - called when player tank wins
 	UFUNCTION()
 	void OnPossessedTankDeath();
 
@@ -35,19 +36,26 @@ private:
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
 
+	// Location of cross hair as normalized percentage of screenspace
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = 0.5f;
-
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairYLocation = 0.33333f;
 
+	// Distance Tank can aim
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000;
 
 protected:
+	// Delegate - called when game is won
+	UFUNCTION(BlueprintImplementableEvent, Category = "Win")
+	void OnGameWin();
+
+	// Called in AimingComponent is found
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
 
+	// Called when tank dies
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void TankDies();
 

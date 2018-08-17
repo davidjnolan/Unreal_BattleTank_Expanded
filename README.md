@@ -21,3 +21,4 @@ Built using Unreal Engine 4.19.2
 * BTE09: Added functionality to for Tanks to spawn multiple pickups on Death
 * BTE10: Add a kill screen
 * BTE11: Basic functionality for Win State added
+* BTE12: Refactor Win State so that it uses event delegates. Added Win Screen

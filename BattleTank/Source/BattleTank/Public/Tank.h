@@ -10,7 +10,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
 
 /*
-* 
+* Base class for all tanks
 */
 
 

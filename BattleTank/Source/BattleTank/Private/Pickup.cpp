@@ -21,11 +21,6 @@ APickup::APickup()
 	PickupLight = CreateDefaultSubobject<UPointLightComponent>(FName("PickupLight"));
 	PickupLight->AttachTo(PickupMesh);
 	PickupLight->SetIntensity(20000.0f);
-
-	
-	
-
-		
 }
 
 // Called when the game starts or when spawned

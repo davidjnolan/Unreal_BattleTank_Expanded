@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright PixelSpawn 2018
 
 #pragma once
 
@@ -6,8 +6,10 @@
 #include "GameFramework/GameModeBase.h"
 #include "BattleTankGameModeBase.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGameModeDelegate);
+
 /**
- * 
+ * Game mode - determines the win state for the game
  */
 UCLASS()
 class BATTLETANK_API ABattleTankGameModeBase : public AGameModeBase
@@ -28,5 +30,7 @@ protected:
 public:
 	// Finds all of the AI controllers in the world, stores in FoundAIControllers
 	void FindAllAIControllers();
+
+	FGameModeDelegate OnWin;
 };
 
