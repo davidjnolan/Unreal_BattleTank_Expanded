@@ -23,6 +23,16 @@ private:
 	virtual void SetPawn(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;
 
+	// Returns true if player is within DetectionRadius, false if not
+	bool IsPlayerDetected(APawn* ControlledTank, APawn* PlayerTank);
+
+	// Aims barrel towards player and fires if FiringState is Locked
+	void AimAtPlayer(APawn* ControlledTank, APawn* PlayerTank);
+
+	void Wander(APawn* ControlledTank);
+	void UpdateWanderDestination(APawn* ControlledTank);
+
+	// Delegate - called when tank is destroyed
 	UFUNCTION()
 	void OnPossessedTankDeath();
 
@@ -55,5 +65,8 @@ protected:
 	// Tracks whether the player has been detected by the AI controller
 	bool bDetectedPlayer = false;
 
+	// Destination for wandering
+	FVector WanderDestination;
+	float WanderAcceptanceRadius = 500;
 	
 };

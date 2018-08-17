@@ -29,9 +29,10 @@ private:
 	// Start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
 	void AimTowardCrosshair();
 
-	// Return an OUT parameter, true if hit landscape
+	// Returns HitLocation as an OUT parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
+	// Returns LookDirection as an OUT Parameter, true if DeprojectScreenPositionToWorld is successful
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;

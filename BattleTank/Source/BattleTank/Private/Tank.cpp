@@ -20,6 +20,7 @@ void ATank::BeginPlay()
 	CurrentHealth = StartingHealth;
 }
 
+// Called by the engine when actor damage is dealt
 float ATank::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AController * EventInstigator, AActor * DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(Damage);
@@ -32,24 +33,15 @@ float ATank::TakeDamage(float Damage, FDamageEvent const & DamageEvent, AControl
 
 	return DamageToApply;
 }
+// Returns CurrentHealth
+int32 ATank::GetHealth() const { return CurrentHealth; }
 
-int32 ATank::GetHealth() const
-{
-	return CurrentHealth;
-}
+// Sets Current Health
+void ATank::SetHealth(int32 NewHealth) { CurrentHealth = NewHealth; }
 
-void ATank::SetHealth(int32 NewHealth)
-{
-	CurrentHealth = NewHealth;
-}
+// Returns StartingHealth
+int32 ATank::GetStartingHealth() const { return StartingHealth; }
 
-int32 ATank::GetStartingHealth() const
-{
-	return StartingHealth;
-}
-
-float ATank::GetHealthPercent() const
-{
-	return (float)CurrentHealth / (float(StartingHealth));
-}
+// Returns CurrentHealth as a normailzed percentage of Starting Health
+float ATank::GetHealthPercent() const {	return (float)CurrentHealth / (float(StartingHealth)); }
 

@@ -47,18 +47,14 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardCrosshair();
 }
 
+// Delegate - called when player tank wins
 void ATankPlayerController::OnPossessedTankDeath()
 {
 	APlayerController::StartSpectatingOnly();
 	TankDies();
 }
-/*
-void ATankPlayerController::OnGameWin()
-{
-	UE_LOG(LogTemp, Warning, TEXT("YOU WIN MUTHAFUCKA!!"));
-}*/
 
-
+// Start the tank moving the barrel so that a shot would hit where the crosshair intersects the world
 void ATankPlayerController::AimTowardCrosshair()
 {
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
@@ -72,7 +68,7 @@ void ATankPlayerController::AimTowardCrosshair()
 	}
 }
 
-// Get world location if linetrace through crosshair, true if hits landscape
+// Get world location if linetrace through crosshair, true if hits landscape. Returns HitLocation as an OUT parameter
 bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
 	// Ray cast through camera to geometry
@@ -93,6 +89,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	return false;
 }
 
+// Deproject screen position into world to get look direction, true if deprojection successful. Returns LookDirection as an OUT parameter
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector CameraWorldLocation; // To be discarded

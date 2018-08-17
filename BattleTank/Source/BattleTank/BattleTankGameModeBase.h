@@ -23,14 +23,11 @@ private:
 	// Keeps track of all AI Controllers in the world
 	TArray<AActor*> FoundAIControllers;
 
-protected:
-	UFUNCTION(BlueprintImplementableEvent, Category = "Win")
-	void GameWin();
-
 public:
 	// Finds all of the AI controllers in the world, stores in FoundAIControllers
 	void FindAllAIControllers();
 
+	// Delegate
 	FGameModeDelegate OnWin;
 };
 

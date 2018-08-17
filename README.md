@@ -22,3 +22,4 @@ Built using Unreal Engine 4.19.2
 * BTE10: Add a kill screen
 * BTE11: Basic functionality for Win State added
 * BTE12: Refactor Win State so that it uses event delegates. Added Win Screen
+* BTE13: Make AI Tanks 'wander' when not detected Player

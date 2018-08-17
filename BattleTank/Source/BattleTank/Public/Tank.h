@@ -8,12 +8,9 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
 
-
 /*
 * Base class for all tanks
 */
-
-
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -40,6 +37,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	int32 GetHealth() const;
 
+	// Sets Current Health
 	UFUNCTION(BlueprintCallable, Category = "Health")
 	void SetHealth(int32 NewHealth);
 
@@ -47,12 +45,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	int32 GetStartingHealth() const;
 
-	// Returns CurrentHealth as a percentage of Starting Health between 0-1
+	// Returns CurrentHealth as a normailzed percentage of Starting Health
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercent() const;
 	
+	// Delegate
 	FTankDelegate OnDeath;
-
-
-
 };
