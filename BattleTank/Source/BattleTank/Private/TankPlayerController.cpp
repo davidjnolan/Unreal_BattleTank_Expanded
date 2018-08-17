@@ -34,6 +34,7 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 void ATankPlayerController::OnPossessedTankDeath()
 {
 	APlayerController::StartSpectatingOnly();
+	TankDies();
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

@@ -19,3 +19,4 @@ Built using Unreal Engine 4.19.2
 * BTE07: Setting Pickup light and material colors dynamically through Blueprint
 * BTE08: Added a couple of projectile variants to test
 * BTE09: Added functionality to for Tanks to spawn multiple pickups on Death
+* BTE10: Add a kill screen
