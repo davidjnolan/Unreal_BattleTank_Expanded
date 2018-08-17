@@ -31,17 +31,17 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 	}
 }
 
-void ATankPlayerController::OnPossessedTankDeath()
-{
-	APlayerController::StartSpectatingOnly();
-	TankDies();
-}
-
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	if (!GetPawn()) { return; }
 	AimTowardCrosshair();
+}
+
+void ATankPlayerController::OnPossessedTankDeath()
+{
+	APlayerController::StartSpectatingOnly();
+	TankDies();
 }
 
 void ATankPlayerController::AimTowardCrosshair()

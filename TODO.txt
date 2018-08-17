@@ -6,7 +6,6 @@
 * Disable ability for tanks to damage themselves with their own projectiles
 * Make collision boxes on pickups bigger
 * Add wandering behavior to the tanks when not detecting player
-* Add a kill screen
 * Create a win state
 * Add a win screen
 * Add sound effects
@@ -17,4 +16,11 @@
 * Make MiniMap
 * Add documentation comments to all of my classes
 * Build model for first tank and turret
-
+* Enable menu gamepad control
+* Add pause menu
+* Setup functionality to record stats
+* Create an Options Menu
+* Add functionality to randomly spawn enemies
+* Add strafe controls
+* Add boost functionality
+* Add Power for strafe and boost

@@ -5,6 +5,7 @@
 #include "Tank.h" // So we can implement OnDeath
 #include "TankAimingComponent.h"
 #include "Pickup.h"
+#include "BattleTankGameModeBase.h"
 
 #include "Engine/World.h"
 #include "GameFramework/Actor.h"
@@ -14,6 +15,8 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+	
+
 }
 
 void ATankAIController::SetPawn(APawn * InPawn)
@@ -35,6 +38,10 @@ void ATankAIController::OnPossessedTankDeath()
 	SpawnPickupsOnDeath(PossessedTank);
 	PossessedTank->DetachFromControllerPendingDestroy();
 	PossessedTank->Destroy();
+
+	// Update count of the number of AI controllers in the world
+	auto Gamemode = (ABattleTankGameModeBase*)GetWorld()->GetAuthGameMode();
+	Gamemode->FindAllAIControllers();
 }
 
 void ATankAIController::Tick(float DeltaTime)

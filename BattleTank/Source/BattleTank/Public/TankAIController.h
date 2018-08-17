@@ -55,5 +55,5 @@ protected:
 	// Tracks whether the player has been detected by the AI controller
 	bool bDetectedPlayer = false;
 
-
+	
 };
