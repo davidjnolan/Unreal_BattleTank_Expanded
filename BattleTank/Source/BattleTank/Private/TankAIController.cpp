@@ -32,7 +32,7 @@ void ATankAIController::OnPossessedTankDeath()
 {
 	if (!GetPawn()) { return; }
 	auto PossessedTank = GetPawn();
-	SpawnPickups(PossessedTank);
+	SpawnPickupsOnDeath(PossessedTank);
 	PossessedTank->DetachFromControllerPendingDestroy();
 	PossessedTank->Destroy();
 }
@@ -40,6 +40,9 @@ void ATankAIController::OnPossessedTankDeath()
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	UE_LOG(LogTemp, Warning, TEXT("%"), AvailableProjectilePickups.Num())
+
 	if (!GetPawn()) { return; }
 	if (!GetWorld()->GetFirstPlayerController()->GetPawn()) { return; }
 
@@ -71,17 +74,27 @@ void ATankAIController::Tick(float DeltaTime)
 	} 
 }
 
-void ATankAIController::SpawnPickups(APawn* PossessedTank)
+void ATankAIController::SpawnPickupsOnDeath(APawn* PossessedTank)
 {
 	if (!ensure(PossessedTank)) { return; }
 	if (!ensure(PickupBlueprint_Health)) { return; }
 
+	SpawnPickup(PossessedTank, PickupBlueprint_Health);
+
+	if (!ensure(AvailableProjectilePickups.Num() > 0)) { return; }
+
+	int Pickup = FMath::RandRange(0, AvailableProjectilePickups.Num() - 1);
+	SpawnPickup(PossessedTank, AvailableProjectilePickups[Pickup]);
+}
+
+void ATankAIController::SpawnPickup(APawn* PossessedTank, TSubclassOf<APickup> PickupToSpawn)
+{
 	float SpawnOffsetX = FMath::RandRange(PickupMaxSpawnDistance*-1, PickupMaxSpawnDistance);
 	float SpawnOffsetY = FMath::RandRange(PickupMaxSpawnDistance*-1, PickupMaxSpawnDistance);
 	FVector SpawnOffset = FVector(SpawnOffsetX, SpawnOffsetY, PickupMaxSpawnDistance);
 	FVector SpawnLocation = PossessedTank->GetActorLocation() + SpawnOffset;
 
-	GetWorld()->SpawnActor<APickup>(PickupBlueprint_Health, SpawnLocation, PossessedTank->GetActorRotation());
+	GetWorld()->SpawnActor<APickup>(PickupToSpawn, SpawnLocation, PossessedTank->GetActorRotation());
 }
 
 
